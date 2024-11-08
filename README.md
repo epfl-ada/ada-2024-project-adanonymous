@@ -47,11 +47,11 @@ Week 4 : Creation of the platform and upload primary findings <br>
 Week 5 : Finish the platform and github for the submission
 
 # Organization within the team: 
-HW2 : ALL
-Discrimination : 
-Genre proportions : 
-PLot summary analysis : 
-US vs WRLD : 
+HW2 : ALL <br>
+Discrimination : <br>
+Genre proportions : <br>
+PLot summary analysis : <br>
+US vs WRLD : <br>
 Platform : 
 
 # Questions for TAs (optional): 
