@@ -22,7 +22,9 @@ We'll start by performing necessary preprocessing steps, including:
 - Discarding outliers
 - Imputing missing values
 - Creating more meaningful columns
-- Transforming data types We'll save the preprocessed datasets in our data folder.
+- Transforming data types
+
+We'll save the preprocessed datasets in our data folder.
 
 ## Analysis 
 To investigate the impact of the 9/11 incident on the movie industry, we'll analyze our cleaned movie dataset in several ways:
