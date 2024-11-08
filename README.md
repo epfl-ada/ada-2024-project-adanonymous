@@ -52,7 +52,7 @@ Week 5 : Finish the platform and github for the submission
 HW2 : ALL <br>
 Discrimination : <br>
 Genre proportions : <br>
-PLot summary analysis : Mirco <br>
+Plot summary analysis : Mirco <br>
 US vs WRLD : <br>
 Platform : 
 
