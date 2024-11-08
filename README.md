@@ -40,10 +40,10 @@ We'll analyze the vocabulary in plot summaries to see if there's a difference in
 We'll compare the impact of 9/11 on the US movie industry with its impact on the rest of the world, examining which regions were more or less affected.
 
 # Proposed timeline
-Week 1 : HW2
-Week 2 : HW2 + Project focus discrimination, genres proportions, plot summary analysis
-Week 3 : Project focus US vs. WRLD and code reformatting
-Week 4 : Creation of the platform and upload primary findings
+Week 1 : HW2 <br>
+Week 2 : HW2 + Project focus discrimination, genres proportions, plot summary analysis <br>
+Week 3 : Project focus US vs. WRLD and code reformatting <br>
+Week 4 : Creation of the platform and upload primary findings <br>
 Week 5 : Finish the platform and github for the submission
 
 # Organization within the team: 
