@@ -47,7 +47,12 @@ Week 4 : Creation of the platform and upload primary findings <br>
 Week 5 : Finish the platform and github for the submission
 
 # Organization within the team: 
-A list of internal milestones up until project Milestone P3.
+HW2 : ALL
+Discrimination : 
+Genre proportions : 
+PLot summary analysis : 
+US vs WRLD : 
+Platform : 
 
 # Questions for TAs (optional): 
 Add here any questions you have for us related to the proposed project.
