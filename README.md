@@ -15,6 +15,37 @@ List the additional dataset(s) you want to use (if any), and some ideas on how y
 
 # Methods
 
+## Preprocessing 
+
+We'll start by performing necessary preprocessing steps, including:
+
+- Discarding outliers
+- Imputing missing values
+- Creating more meaningful columns
+- Transforming data types We'll save the preprocessed datasets in our data folder.
+
+Analysis 
+To investigate the impact of the 9/11 incident on the movie industry, we'll analyze our cleaned movie dataset in several ways:
+
+## Discrimination Analysis
+We'll examine if there's a noticeable difference in the representation of ethnicities of actors and villains in movies before and after 9/11, specifically looking for signs of racism and/or islamophobia.
+
+## Genre Proportions Analysis
+We'll compare the proportions of films in different genres, particularly the war genre, to see if there's a change in the number of films produced after 9/11.
+
+## Plot Summary Analysis
+We'll analyze the vocabulary in plot summaries to see if there's a difference in the frequency of words related to 9/11, such as terrorism, towers, and plane. We may use NLP models to quantify the differences.
+
+## US vs. WRLD Analysis
+We'll compare the impact of 9/11 on the US movie industry with its impact on the rest of the world, examining which regions were more or less affected.
+
+# Proposed timeline
+Week 1 : HW2
+Week 2 : HW2 + Project focus discrimination, genres proportions, plot summary analysis
+Week 3 : Project focus US vs. WRLD and code reformatting
+Week 4 : Creation of the platform and upload primary findings
+Week 5 : Finish the platform and github for the submission
+
 # Organization within the team: 
 A list of internal milestones up until project Milestone P3.
 
