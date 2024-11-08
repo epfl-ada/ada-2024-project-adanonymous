@@ -24,19 +24,19 @@ We'll start by performing necessary preprocessing steps, including:
 - Creating more meaningful columns
 - Transforming data types We'll save the preprocessed datasets in our data folder.
 
-Analysis 
+## Analysis 
 To investigate the impact of the 9/11 incident on the movie industry, we'll analyze our cleaned movie dataset in several ways:
 
-## Discrimination Analysis
+### Discrimination Analysis
 We'll examine if there's a noticeable difference in the representation of ethnicities of actors and villains in movies before and after 9/11, specifically looking for signs of racism and/or islamophobia.
 
-## Genre Proportions Analysis
+### Genre Proportions Analysis
 We'll compare the proportions of films in different genres, particularly the war genre, to see if there's a change in the number of films produced after 9/11.
 
-## Plot Summary Analysis
+### Plot Summary Analysis
 We'll analyze the vocabulary in plot summaries to see if there's a difference in the frequency of words related to 9/11, such as terrorism, towers, and plane. We may use NLP models to quantify the differences.
 
-## US vs. WRLD Analysis
+### US vs. WRLD Analysis
 We'll compare the impact of 9/11 on the US movie industry with its impact on the rest of the world, examining which regions were more or less affected.
 
 # Proposed timeline
