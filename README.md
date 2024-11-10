@@ -9,6 +9,13 @@ Our project is based on the analysis of racism and terrorism representation in t
 
 # Research Questions: 
 A list of research questions you would like to address during the project.
+Questions: 
+•	What is the impact on racism of 9/11? Do we observe an increase in African ethnicity on actor representation? What ‘s their role, how are they describe? On a similar aspect, 9/11 attacks were claimed by Al-Qaeda, a group of extreme radicalized Muslims terrorist. Did it have an impact on the Muslim representation in movies?  
+•	Cinema is often considered as a mirror of society. Therefore, was there an impact of 9/11 on cinema production, most importantly do we observe a shift in genre compared to the previous decade?
+•	Do movies talking about war were more attractive before or after 9/11, did it have an impact? Does the representation of war increase?  
+•	We assume the impact of 9/11 was greater in the United States compared to the rest of the world. But can we find other places where it had a great impact too on cinema? Those these places are known to have close relation with United States, or were they victim of similar attacks at the same time? 
+•	Did this breakthrough event slow the cinema industry or on the contrary did we observe an increase?
+
 
 # Additional datasets (if any): 
 List the additional dataset(s) you want to use (if any), and some ideas on how you expect to get, manage, process, and enrich it/them. Show us that you’ve read the docs and some examples, and that you have a clear idea on what to expect. Discuss data size and format if relevant. It is your responsibility to check that what you propose is feasible.
