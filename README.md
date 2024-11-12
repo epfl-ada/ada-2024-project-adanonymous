@@ -1,8 +1,6 @@
 # Title
 
 # Abstract: 
-A 150 word description of the project idea and goals. What’s the motivation behind your project? What story would you like to tell, and why?
-
 
 On September 11, 2001, terrorist hijacked two planes into One and Two World Trade Center. In the space of two hours, the tower collapse. Nearly 2800 people died this day. This event marks the beginning of the war opposing the United States and terrorism. Recognizing cinema as mirror of society, our motivation is to explore how traumatic, world-altering events, like 9/11, influence storytelling in film, particularly in terms of themes of security, nationalism, fear, and resilience. Based on this assumption, we aim to identify shifts in genre preferences, character archetypes and plot structure. Our goal is to tell the story on how cinema is defined by the culture identity and the collective trauma. More importantly, we want to show how cinema evolves in response a pivotal event: 9/11. 
 Our project is based on the analysis of racism and terrorism representation in the US production compared to the rest of the world before and after 9/11. 
@@ -11,7 +9,7 @@ Our project is based on the analysis of racism and terrorism representation in t
 A list of research questions you would like to address during the project.
 Questions: 
 
-•	What is the impact on racism of 9/11? Do we observe an increase in African ethnicity on actor representation? What ‘s their role, how are they describe? On a similar aspect, 9/11 attacks were claimed by Al-Qaeda, a group of extreme radicalized Muslims terrorist. Did it have an impact on the Muslim representation in movies? 
+•	What is the impact on racism of 9/11? Do we observe a change in some ethnicities on actor representation? What ‘s their role, how are they describe? On a similar aspect, 9/11 attacks were claimed by Al-Qaeda, a group of extreme radicalized Muslims terrorist. Did it have an impact on the Muslim representation in movies? 
 
 •	Cinema is often considered as a mirror of society. Therefore, was there an impact of 9/11 on cinema production, most importantly do we observe a shift in genre compared to the previous decade?
 
@@ -63,7 +61,7 @@ Week 5 : Finish the platform and github for the submission
 # Organization within the team: 
 HW2 : ALL <br>
 Discrimination : <br>
-Genre proportions : <br>
+Genre proportions : Ines <br>
 Plot summary analysis : Mirco <br>
 US vs WRLD : <br>
 Platform : 
