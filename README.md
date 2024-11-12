@@ -1,4 +1,4 @@
-# Title : 9/11 - Did you sense the impact from your sofa
+# Title : 9/11 - Did you see the impact from your sofa
 
 # Abstract:
 
