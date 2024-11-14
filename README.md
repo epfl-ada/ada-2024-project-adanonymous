@@ -20,7 +20,7 @@ Questions:
 
 # Additional datasets (if any): 
 
-The datasets we already have at our disposal often use Freebase IDs to provide some useful information. Unfortunately, it is hard to work with Freebase IDs nowadays because the Google Freebase API that was used to get meaningful information from these IDs was removed a few years ago. In order to translate these IDs into meaningful information, we had to find an alternative. We use the freebase-wikidata-mapping dataset found here : https://www.kaggle.com/datasets/latebloomer/freebase-wikidata-mapping/data. This dataset consists of 3 columns : freebase_id, wikidata_id and label. From this dataset, we simply created a function that maps any freebase ID to its label. The dataset contains more than 2 000 000 lines so the mapping is not extremely fast, but it is really manageable (1 to 3 hours to call the function 100k times).
+The datasets we already have at our disposal often use Freebase IDs to provide some useful information. Unfortunately, it is hard to work with Freebase IDs nowadays because the Google Freebase API that was used to get meaningful information from these IDs was removed a few years ago. In order to translate these IDs into meaningful information, we had to find an alternative. We use the freebase-wikidata-label dataset found here : https://www.kaggle.com/datasets/latebloomer/freebase-wikidata-mapping/data. This dataset consists of 3 columns : freebase_id, wikidata_id and label. From this dataset, we simply created a function that maps any freebase ID to its label. The dataset contains more than 2 000 000 lines so the mapping is not extremely fast, but it is really manageable (1 to 3 hours to call the function 100k times).
 
 # Methods
 
