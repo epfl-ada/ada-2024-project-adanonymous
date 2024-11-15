@@ -1,9 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd 
-import pickle
-from scipy import stats
 from sklearn import linear_model
 
 

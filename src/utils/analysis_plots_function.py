@@ -1,16 +1,25 @@
-
-import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd 
 import math
 
+
 def count_key_words(movies_and_plots_df, key_words):
-    # Count the number of occurences of key words in plot summary for each movie 
+    """
+    Count the given key words in the plot summaries and outputs a dataframe with the counts by year of release of the movies
+
+    Args:
+        movies_and_plots_df (Dataframe): The merge of the movies dataset and the plot_summaries dataset
+        key_words (List[str]): The list of key words
+
+    Returns:
+        df_key_words_occ (Dataframe): A dataframe with the information
+    """
+    
     df_plots = movies_and_plots_df[['Wikipedia_movie_ID', 'Freebase_movie_ID', 'Movie_name', 'Movie_release_date', 'Plot']]
     col_name_of_key_words = ['Count_of_' + '_'.join(word.split(' ')) for word in key_words]
     pd.options.mode.chained_assignment = None  # default='warn'
-
+    
+    # Count the number of occurences of key words in plot summary for each movie 
     for i in range(len(key_words)):
         df_plots[col_name_of_key_words[i]] = df_plots['Plot'].apply(lambda x: x.count(key_words[i]))
 
@@ -25,6 +34,13 @@ def count_key_words(movies_and_plots_df, key_words):
 
 
 def plot_key_words_occ(key_words_occ_df, key_words):
+    """
+    Plots the occurences of the key words by year of release of the movies
+
+    Args:
+        key_words_occ_df (Dataframe): The dataframe of the key words occurences by year of release
+        key_words (List[str]): The list of key words
+    """
     col_name_of_key_words = ['Count_of_' + '_'.join(word.split(' ')) for word in key_words]
     n_key_words = len(key_words)
 
@@ -48,6 +64,14 @@ def plot_key_words_occ(key_words_occ_df, key_words):
 
     
 def plot_key_words_occ_zoomed(key_words_occ_df, key_words):
+    """
+    Plots the occurences of the key words by year of release of the movies from 1992 to 2013. Adds a grid for convenience
+
+    Args:
+        key_words_occ_df (Dataframe): The dataframe of the key words occurences by year of release
+        key_words (List[str]): The list of key words
+    """
+
     df_key_words_occ_reset = key_words_occ_df.reset_index()
     key_words_occ_df_zoomed = df_key_words_occ_reset[((1992 <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] <= 2013)) == 1]
     key_words_occ_df_zoomed = key_words_occ_df_zoomed.set_index(keys='Movie_release_date')
@@ -79,6 +103,13 @@ def plot_key_words_occ_zoomed(key_words_occ_df, key_words):
 
 
 def percentage_key_words_before_after(key_words_occ_df):
+    """
+    Calculates the percentage of the key words occurence before 2002 (incl.) and after 2003 (incl.) separately.
+
+    Args:
+        key_words_occ_df (Dataframe): The dataframe of the key words occurences by year of release
+    """
+
     df_key_words_occ_i = key_words_occ_df.reset_index()
     df_key_words_occ_before = df_key_words_occ_i[(1992 <= df_key_words_occ_i['Movie_release_date']) * (df_key_words_occ_i['Movie_release_date'] < 2003) == 1]
     df_key_words_occ_after = df_key_words_occ_i[(2003 <= df_key_words_occ_i['Movie_release_date'])  * (df_key_words_occ_i['Movie_release_date'] <= 2013) == 1]
