@@ -11,8 +11,16 @@ Evolution nombre de film et revenu entre 39 et 45
 Plot :  a faire
 
 ## Genre anaylisis WW2
+Imagine you’re relaxing on your sofa, ready to watch an old movie from the 1940s. Out of curiosity, you type "best movie 1942" into Google — the year of your grandfather's birth. To your surprise, the top three highest-rated films from that year, according to IMDb, are about crime and death.
+
+This sparks your interest: could it be a coincidence, or was there a broader trend in movie genres at that time?
+
 Plot : graphplot evolution des genre independament des country 
-Texte : Analyse des genres, concentration sur war film
+
+To investigate, you look at the percentage of film genres with significant variation in a five-year range before and after 1942. The results reveal that genres like war films, propaganda films, and combat films increased in their occurence in the cinema. The data even highlights a peak, reflecting a rise in these types of films around this period.
+
+Considering that World War II took place from 1939 to 1945, it becomes linked that the war influenced cinematic themes. The shift in genres appears to have started around 1940 and continued until around 1948.
+You want to understand this trend a bit more, so you decide to focus on the "war film" genre across each of the main included continents: North America, Europe, and Asia.
 
 Plot  : Carte par continent du changement de war film a traver le temps
 Analyse : par continent 
