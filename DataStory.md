@@ -49,8 +49,13 @@ Plot : regression lineaire US vs NON us sur polictical cinema
 
 The analysis shows that, for U.S. movies, the percentage of political cinema is relatively constant before 2001 but shows an upward trend afterward. In contrast, for non-U.S. movies, no significant change in the trend is observed. This suggests that the shift is primarily driven by an event within the U.S. and more probably the 09/11 crisis.
 
-Precise le us vs non us au continnent 
+If this shift is linked to the events of 9/11, we want to know whether the trend is consistent for non-U.S. regions. To do so, we focus on three key regions: Europe, Asia, and North America.
+
 Plot :  evoluion du genre political cinema genre par continent 
+
+Starting from 2001, there is a noticeable emergence of the political cinema genre in Asia, where it was previously absent. In Europe, we observe a small increase in the genre's presence, less pronounced than the significant rise seen in the U.S.
+This suggests that while the impact of 9/11 on political cinema is most evident in the U.S., its influence can also be seen, to a lesser extent, in other regions, particularly in Asia. Some cofounders might also be under the change in the other continents. 
+
 
 ## Ethnicity analysis
 Plot : Bar plot distribution ethicnty avant après event et  US vs rest of world
