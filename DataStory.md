@@ -39,13 +39,18 @@ To do
 # 9/11
 
 ## Genre anaylisis : US vs rest of the world
+
 Plot  : graph plot of genre evolution by US vs NON us 
-Analyse to then focus on political cinema
+If we focus on some genre trends around 2001, shifts can be observed in genres such as social issues, political cinema, law and crime, and culture and society.
+
+Among these, political cinema seems to have an important change . To better understand this shift, we apply a linear regression to analyze the overall trend before and after 2001. Furthermore, we separate the analysis into U.S. and non-U.S. movies to determine whether the change is a global phenomenon or specific to the U.S.
+
 Plot : regression lineaire US vs NON us sur polictical cinema
-Analyse 
+
+The analysis shows that, for U.S. movies, the percentage of political cinema is relatively constant before 2001 but shows an upward trend afterward. In contrast, for non-U.S. movies, no significant change in the trend is observed. This suggests that the shift is primarily driven by an event within the U.S. and more probably the 09/11 crisis.
 
 Precise le us vs non us au continnent 
-Plot :  evoluion du genre war film genre par continent 
+Plot :  evoluion du genre political cinema genre par continent 
 
 ## Ethnicity analysis
 Plot : Bar plot distribution ethicnty avant après event et  US vs rest of world
