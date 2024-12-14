@@ -3,10 +3,19 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 from sklearn import linear_model
 import plotly.graph_objects as go
+import pandas as pd
+
+import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-# function that extract if movies was created in US
+import plotly.express as px
+import pandas as pd
+
+
+    
+
+### function that extract if movies was created in US
 
 def count_country(data, country = "United States of America"):
     '''
@@ -34,7 +43,7 @@ def extract_us_nonus(data):
 
     return us_movies,nonus_movies
 
-#get the list of genre
+###get the list of genre
 
 def get_all_genre(data):
     genres_unique = []
@@ -46,8 +55,9 @@ def get_all_genre(data):
     return genres_unique
 
 
-### plot of barplot for genre change before and after the event 
-#function to count the genre
+
+###function to count the genre
+
 def count_genre(data, genre):
     '''
     function that countes the occurence of a given genre in the data 
@@ -57,6 +67,8 @@ def count_genre(data, genre):
         if j is not None:
             total += j.count(genre)
     return total
+
+### plot time serie of a gerne evolution
 
 def plot_percentage_movies_genre(data, genre, year_initial, year_end, focus_year,ax, fig):
     '''
@@ -71,6 +83,7 @@ def plot_percentage_movies_genre(data, genre, year_initial, year_end, focus_year
         focus_year: the year the event we study appears
         ax,fig: used later for subplots
     '''
+    genre = genre  
 
     # count the number of movies that have the given genre per year 
     movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
@@ -93,6 +106,7 @@ def plot_percentage_movies_genre(data, genre, year_initial, year_end, focus_year
     fig.text(0.04, 0.5, 'percentage of movies from given genre per year', ha='center', rotation='vertical')
     ax.grid()
 
+
 def plot_percentage_movies_genre_all(data, genres, year_initial, year_end, focus_year,nrows,ncols):
     '''
     a function that wraps up the plots for various genres with a subplor with nrows and ncols 
@@ -105,144 +119,8 @@ def plot_percentage_movies_genre_all(data, genres, year_initial, year_end, focus
             ax = axs[i][j]
             plot_percentage_movies_genre(data, genres[i*ncols+j], year_initial, year_end, focus_year, ax, fig)
 
-def ploltly_percentage_movies(data,data2, genres, year_initial, year_end, focus_year,nrows,ncols):
-    colors = [
-    '#1f77b4',  # muted blue
-    '#ff7f0e',  # safety orange
-    '#2ca02c',  # cooked asparagus green
-    '#d62728',  # brick red
-    '#9467bd',  # muted purple
-    '#8c564b',  # chestnut brown
-    '#e377c2',  # raspberry yogurt pink
-    '#7f7f7f',  # middle gray
-    '#bcbd22',  # curry yellow-green
-    '#17becf'   # blue-teal
-]
-    fig = make_subplots(rows=2, cols=1,subplot_titles=("US movies", "Non US Movies"))
-    show = [False for i in range(nrows*ncols*2)]
-    buttons = []
-    r = dict(label = "All", method = "update", args = [{"visible": [True for i in range(nrows*ncols)], "title": "All"}])
-    buttons.append(r)
-    for i in range(nrows):
-        for j in range(ncols):
-            genre = genres[i*ncols+j]
 
-            movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
-            movies_year.columns = ["year", "count"]
-            yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
-            x = movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year < year_end)]["year"]
-            y = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index < year_end)].values*100
-            fig.add_trace(
-                go.Scatter(x = x, y = y, mode = 'lines', name = genre,legendgroup=genre,showlegend=True,line=dict(color=colors[i*ncols+j])),
-                row = 1, col = 1
-                )
-    
-
-            movies_year2 = data2.groupby(data2.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
-            movies_year2.columns = ["year", "count"]
-            yearly_movies2 = data2.groupby(data2.Movie_release_date.dt.year)['nb_genre'].agg('sum')
-            x = movies_year2.loc[(movies_year2.year > year_initial  )&( movies_year2.year < year_end)]["year"]
-            y = movies_year2.loc[(movies_year2.year>year_initial) & (movies_year2.year<year_end)]["count"]/yearly_movies2[(yearly_movies2.index >year_initial) & (yearly_movies2.index < year_end)].values*100
-            fig.add_trace(
-                go.Scatter(x = x, y = y, mode = 'lines', name = genre,legendgroup=genre,showlegend=False,line=dict(color=colors[i*ncols+j])),
-                row = 2, col = 1,
-            )
-
-
-
-            show_this_genre = show.copy()
-            show_this_genre[(i*ncols+j)*2] = True
-            show_this_genre[(i*ncols+j)*2+1] = True
-            #show_this_genre[i*ncols+j+nrows*ncols] = True
-            print(show_this_genre)
-            r = dict(label = genre, method = "update", args = [{"visible": show_this_genre, "title": genre}])
-            buttons.append(r)
-    
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                active=0,
-                buttons=list(buttons),
-                direction="down",
-                pad={"r": 10, "t": 10},
-                showactive=True,
-                y = 1.2,
-                x = 1,
-                xanchor="left",
-                yanchor="top",
-            ),
-        ]
-    )
-    fig.add_vline(x=focus_year, line_dash="dash", line_color="red", line_width=1)
-    fig.update_layout(title_text="Genre distribution")
-    fig.update_xaxes(title_text="Year")
-    fig.update_yaxes(title_text="Percentage of movies")
-    fig.show()
-    fig.write_html("src/figures/movie_genre_us.html")
-
-def ploltly_percentage_movies_ww2(data, genres, year_initial, year_end, focus_year,nrows,ncols):
-    colors = [
-    '#1f77b4',  # muted blue
-    '#ff7f0e',  # safety orange
-    '#2ca02c',  # cooked asparagus green
-    '#d62728',  # brick red
-    '#9467bd',  # muted purple
-    '#8c564b',  # chestnut brown
-    '#e377c2',  # raspberry yogurt pink
-    '#7f7f7f',  # middle gray
-    '#bcbd22',  # curry yellow-green
-    '#17becf'   # blue-teal
-]
-    fig = go.Figure()
-    show = [False for i in range(nrows*ncols)]
-    buttons = []
-    r = dict(label = "All", method = "update", args = [{"visible": [True for i in range(nrows*ncols)], "title": "All"}])
-    buttons.append(r)
-    for i in range(nrows):
-        for j in range(ncols):
-            genre = genres[i*ncols+j]
-
-            movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
-            movies_year.columns = ["year", "count"]
-            yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
-            x = movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year < year_end)]["year"]
-            y = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index < year_end)].values*100
-            fig.add_trace(
-                go.Scatter(x = x, y = y, mode = 'lines', name = genre,legendgroup=genre,showlegend=True,line=dict(color=colors[i*ncols+j]))
-                )
-
-
-            show_this_genre = show.copy()
-            show_this_genre[(i*ncols+j)] = True
-            #show_this_genre[i*ncols+j+nrows*ncols] = True
-            print(show_this_genre)
-            r = dict(label = genre, method = "update", args = [{"visible": show_this_genre, "title": genre}])
-            buttons.append(r)
-    
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                active=0,
-                buttons=list(buttons),
-                direction="down",
-                pad={"r": 10, "t": 10},
-                showactive=True,
-                y = 1.2,
-                x = 1,
-                xanchor="left",
-                yanchor="top",
-            ),
-        ]
-    )
-    fig.add_vline(x=focus_year, line_dash="dash", line_color="red", line_width=1)
-    fig.update_layout(title_text="Genre distribution")
-    fig.update_xaxes(title_text="Year")
-    fig.update_yaxes(title_text="Percentage of movies")
-    fig.show()
-    fig.write_html("src/figures/movie_genre_us_ww2.html")
-
-
-
+### function that gives the genre that changed the most between two periods 
 
 def get_movies_genre_change(data, genres_unique, nb_genres, year_initial, year_middle, year_end):
     '''
@@ -314,6 +192,9 @@ def get_movies_genre_change(data, genres_unique, nb_genres, year_initial, year_m
 
     return df
 
+
+### plot of barplot for genre change before and after the event 
+
 def plot_movies_genre_change(df):
         '''
         a function that plots a barplots for before and after the middleyear 
@@ -335,54 +216,404 @@ def plot_movies_genre_change(df):
         plt.tight_layout()
         plt.show()
 
-def plotly_plot_movie_genre(df1,df2):
-    color1 = 'blue'
-    color2 = 'orange'
-    fig = make_subplots(rows=2, cols=1,subplot_titles=("US movies", "Non US Movies"))
-    fig.update_layout(height=800,width = 800, title_text="Genre distribution before and after event")
+            
+### a function that give the percentage of a genre between 2 time frame for each continent
 
-    fig.add_trace(go.Bar(x=df1.genre, y=df1['count_before'], name='Before event', marker_color=color1), row=1, col=1)
-    fig.add_trace(go.Bar(x=df1.genre, y=df1['count_after'], name='After event', marker_color=color2), row=1, col=1)    
-    fig.add_trace(go.Bar(x=df2.genre, y=df2['count_before'], name='Before event', marker_color=color1,showlegend =  False), row=2, col=1)
-    fig.add_trace(go.Bar(x=df2.genre, y=df2['count_after'], name='After event', marker_color=color2,showlegend =  False), row=2, col=1)
-    fig.update_yaxes(title_text="Percentage (%)", row=1, col=1)
-    fig.update_yaxes(title_text="Percentage (%)", row=2, col=1)
-    fig.show()
-    fig.write_html("src/figures/movie_genre_us_bar.html")
+def get_country_dataset(all_data,year_initial,year_end,focus_year,genre):
+    '''
+    input : 3 dataset one foor each continent (Europe, North America Asia)
+            time period of the stidy (initial, middle end)
+            genre to focus on
+    output: a data frame with 3 columns giving the percentage of the genre for each continent
+    '''
+    data_percentage = []
+    for i in range(3):
+        data = all_data[i]
+        movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
+        movies_year.columns = ["year", "count"]
+
+        # get the total number of genre for a given year, a movies with 5 genres will add 5 to the total count  
+        #if we want to divise by the total number of movies, change by sum by count 
+        yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
+
+        #percentage of a given genre
+        percentage = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index < year_end)].values*100
+        percentage_before = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<=focus_year)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index <= focus_year)].values*100
+        percentage_after = movies_year.loc[(movies_year.year>=focus_year) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >=focus_year) & (yearly_movies.index < year_end)].values*100
+
+        data_percentage.append(percentage.values)
         
-def linear_regression_plot(data,year_initial,year_end,focus_year,genre):
+    data_percentage.append(movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year < year_end)]["year"].values)
+    
 
+    df = pd.DataFrame(np.array(data_percentage).T, columns = ['North_America', 'Europe', 'Asia', 'Year'])
+    return df
+
+### associate a coutry to a continent and split the dataframe accordingly
+
+def continent_data(movies):
+
+    first_movies = movies.FirstCountry_Name.dropna().unique()
+    second_movies = movies.SecondCountry_Name.dropna().unique()
+
+    list_movies = np.concatenate((first_movies, second_movies))
+    unique_countries = np.unique(list_movies) 
+
+    #uploead the contry continent correspondence
+    continents = pd.read_csv('data/continents.csv', sep =';')
+
+    # set new column for continents
+    movies['FirstContinent_name']= movies.FirstCountry_Name.apply(lambda x : continents.loc[continents.Entity == x, 'World regions according to OWID'].values[0])
+    movies['SecondContinent_name']= movies.SecondCountry_Name.apply(lambda x : continents.loc[continents.Entity == x, 'World regions according to OWID'].values[0] if x is not None else None)
+
+    # extract the continents
+    Europe = movies.loc[(movies['FirstContinent_name'] == 'Europe') |(movies['SecondContinent_name'] == 'Europe')]
+    Africa = movies.loc[(movies['FirstContinent_name'] == 'Africa') |(movies['SecondContinent_name'] == 'Africa')]
+    Asia = movies.loc[(movies['FirstContinent_name'] == 'Asia') |(movies['SecondContinent_name'] == 'Asia')]
+    Australia = movies.loc[(movies['FirstContinent_name'] == 'Oceania') |(movies['SecondContinent_name'] == 'Oceania')]
+    South_America =  movies.loc[(movies['FirstContinent_name'] == 'South America') |(movies['SecondContinent_name'] == 'South America')]
+    North_America =  movies.loc[(movies['FirstContinent_name'] == 'North America') |(movies['SecondContinent_name'] == 'North America')]
+
+    #keep the one we focus on 
+    world_data = [North_America, Europe, Asia]
+    world = ['North_America', 'Europe', 'Asia']
+
+    return world_data
+
+
+ ### interactive plot per continent
+
+def plot_per_continent(movies, initial_year, final_year, middle_year, genre):
+    '''
+    function that plot for each continent the evolution of the given genre a possible change of continent is made with a button
+    input: focus period, dataset, genre
+    output : interactive plot of percentage evolution
+    '''
+    # get per continent movies
+    world_data = continent_data(movies)
+    df = get_country_dataset(world_data, initial_year, final_year, middle_year, genre)
+
+    fig = go.Figure()
+
+    #  max and min per continent
+    max_asia = df['Asia'].max()
+    max_north_america = df['North_America'].max()
+    max_europe = df['Europe'].max()
+
+    min_asia = df['Asia'].min()
+    min_north_america = df['North_America'].min()
+    min_europe = df['Europe'].min()
+
+    fig.add_trace(
+        go.Scatter(x=list(df.Year),
+                   y=list(df.Asia),
+                   name="Asia",
+                   visible=True,  # Make Asia visible initially
+                   line=dict(color="#33CFA5")))
+
+    fig.add_trace(
+        go.Scatter(x=list(df.Year),
+                   y=list(df.North_America),
+                   name="North_America",
+                   visible=False,
+                   line=dict(color="#3b33cf")))
+
+    fig.add_trace(
+        go.Scatter(x=list(df.Year),
+                   y=list(df.Europe),
+                   name="Europe",
+                   visible=False,
+                   line=dict(color="#F06A6A")))
+
+    asia_line = dict(type="line",
+                     x0=middle_year, x1=middle_year,
+                     y0=min_asia, y1=max_asia,
+                     xref="x", yref="y",
+                     line=dict(color="#33CFA5", dash="dot"))
+
+    north_america_line = dict(type="line",
+                              x0=middle_year, x1=middle_year,
+                              y0=min_north_america, y1=max_north_america,
+                              xref="x", yref="y",
+                              line=dict(color="#3b33cf", dash="dot"))
+
+    europe_line = dict(type="line",
+                       x0=middle_year, x1=middle_year,
+                       y0=min_europe, y1=max_europe,
+                       xref="x", yref="y",
+                       line=dict(color="#F06A6A", dash="dot"))
+
+
+    fig.update_layout(
+        shapes=[asia_line],  # Initially show only Asia's line
+        updatemenus=[
+            dict(
+                active=0,
+                buttons=list([
+                    dict(label="Asia",
+                         method="update",
+                         args=[{"visible": [True, False, False]},
+                               {"title": "Asia",
+                                "shapes": [asia_line]}]),
+                    dict(label="Europe",
+                         method="update",
+                         args=[{"visible": [False, False, True]},
+                               {"title": "Europe",
+                                "shapes": [europe_line]}]),
+                    dict(label="North_America",
+                         method="update",
+                         args=[{"visible": [False, True, False]},
+                               {"title": "North America",
+                                "shapes": [north_america_line]}]),
+                    dict(label="All",
+                         method="update",
+                         args=[{"visible": [True, True, True]},
+                               {"title": "All",
+                                "shapes": [asia_line, europe_line, north_america_line]}]),
+                ]),
+            )
+        ])
+
+    fig.update_layout(title_text=genre)
+
+    fig.show()
+
+
+### static plot per continent
+def plot_continent(movies, initial_year, final_year, middle_year, genre):
+    '''
+    Function that plots for each continent the evolution of the given genre 
+    Input: focus period, dataset, genre
+    Output: Static plot of percentage evolution
+    '''
+    #get data
+    world_data = continent_data(movies)
+    df = get_country_dataset(world_data, initial_year, final_year, middle_year, genre)
+ 
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(df['Year'], df['Asia'], label='Asia', color='#33CFA5', linewidth=2)
+    plt.plot(df['Year'], df['North_America'], label='North America', color='#3b33cf', linewidth=2)
+    plt.plot(df['Year'], df['Europe'], label='Europe', color='#F06A6A', linewidth=2)
+
+    
+    plt.axvline(x=middle_year, color='black', linestyle='--', linewidth=1.5, label=f'Year ({middle_year})')
+
+    plt.xticks(df['Year'], rotation = 'vertical')
+    plt.xlabel('Year')
+    plt.ylabel('Percentage')
+    plt.title(f'Percentage evolution of {genre} in different continents')
+    plt.legend(loc='best')
+    plt.grid(True, linestyle='--') 
+
+    plt.show()
+
+### interactive world map plot
+
+def create_world_map(movies, initial_year, final_year, middle_year, genres):
+    '''
+    Function that creates an interactive world map with genre percentage evolution for various genres
+    '''
+    app = Dash(__name__)
+    
+    world_data = continent_data(movies)
+    continent_data_df = []
+
+    # to have a button for the gentes we want to focus on 
+    for genre in genres:
+        genre_data_df = get_country_dataset(world_data, initial_year, final_year, middle_year, genre)
+        genre_data_df['Genre'] = genre
+        continent_data_df.append(genre_data_df)
+    df = pd.concat(continent_data_df, ignore_index=True)
+    
+    df2 = pd.melt(df, id_vars=['Year', 'Genre'], value_vars=['North_America', 'Europe', 'Asia'],
+                        var_name='Continent', value_name='Value')
+    
+    #where the values will be plot on the map
+    continent_to_countries = {
+        "North_America": ["CAN", "MEX", "USA", "BLZ", "CRI", "DMA", "GRD", "GTM", "HND", "JAM", 
+                            "KNA", "LCA", "VCT", "TTO", "BHS", "CUB", "BVI", "MSR", "SPM", "PRI"],
+        "Europe": ["ALB", "AND", "AUT", "BLR", "BEL", "BIH", "BGR", "HRV", "CYP", "CZE", "DNK", "EST", "FIN", "FRA", 
+                    "DEU", "GRC", "HUN", "ISL", "IRL", "ITA", "LVA", "LIE", "LTU", "LUX", "MLT", "MDA", "MCO", "MNE", 
+                    "NLD", "MKD", "NOR", "POL", "PRT", "ROU", "RUS", "SMR", "SRB", "SVK", "SVN", "ESP", "SWE", "CHE", 
+                    "TUR", "UKR", "GBR", "VAT"],
+        "Asia": ["AFG", "ARM", "AZE", "BGD", "BRN", "BTN", "KHM", "CHN", "CYP", "GEO", "IND", "IDN", "IRN", "IRQ", 
+                    "ISR", "JPN", "JOR", "KAZ", "KOR", "KWT", "KGZ", "LAO", "LBN", "MAC", "MYS", "NPL", "PAK", "PHL", 
+                    "QAT", "SAU", "SGP", "LKA", "SYR", "TWN", "TJK", "THA", "TUR", "TKM", "ARE", "UZB", "VNM", "YEM"]
+    }
+    
+    expanded_rows = []
+    for _, row in df2.iterrows():
+        continent = row["Continent"]
+        if continent in continent_to_countries:
+            for country in continent_to_countries[continent]:
+                expanded_rows.append({
+                    "Year": row["Year"],
+                    "Genre": row["Genre"],
+                    "Continent": row["Continent"],
+                    "Value": row["Value"],
+                    "iso_alpha": country
+                })
+    
+    expanded_df = pd.DataFrame(expanded_rows)
+    
+    app.layout = html.Div([
+        html.H4('Political Candidate Voting Pool Analysis'),
+        html.P("Select a Genre:"),
+        dcc.RadioItems(
+            id='genre', 
+            options=[{'label': genre, 'value': genre} for genre in genres],
+            value="War film",
+            inline=True
+        ),
+        dcc.Graph(id="graph"),
+    ])
+    
+    @app.callback(
+        Output("graph", "figure"),
+        Input("genre", "value")
+    )
+    def display_choropleth(genre):
+        filtered_df = expanded_df[expanded_df['Genre'] == genre]
+        
+        fig = px.choropleth(
+            filtered_df,
+            locations="iso_alpha",
+            color="Value",
+            hover_name="Continent",
+            animation_frame="Year",
+            projection="natural earth",
+            range_color=[filtered_df.Value.min(), filtered_df.Value.max()],
+            title=f"Percentage of genre {genre} by continent"
+        )
+
+        
+        return fig
+
+    app.run_server(debug=True)
+
+
+
+## get the percentage of a genre 
+
+def percentage_movies_genre(data, europe, genre, year_initial, year_end, focus_year):
 
     movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
     movies_year.columns = ["year", "count"]
 
-    # get the total number of genre for a given year, a movies with 5 genres will add 5 to the total count  
-    #if we want to divise by the total number of movies, change by sum by count 
+
     yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
+    europe_movies = europe.groupby(europe.Movie_release_date.dt.year)['nb_genre'].agg('sum')
 
-    #percentage of a given genre
-    percentage = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index < year_end)].values*100
-    percentage_before = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<=focus_year)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index <= focus_year)].values*100
-    percentage_after = movies_year.loc[(movies_year.year>=focus_year) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >=focus_year) & (yearly_movies.index < year_end)].values*100
+    percentage = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/europe_movies[(europe_movies.index >year_initial) & (europe_movies.index < year_end)].values*100
 
+    return percentage
+
+# plot the propaganda movies percentage for Germany vs the rest of Europe
+
+def get_propaganda_movies(movies, initial_year, final_year, middle_year, genre):
+
+    ## 'Nazi Germany', 'Germany'
+    
+    world_data = continent_data(movies)
+    data = world_data[1]
+    europe = data.loc[(data.Movie_release_date.dt.year>1930) & (data.Movie_release_date.dt.year<=1950)]
+
+    # get all german movies and rest of Europe
+    german =  europe["Movie_countries"].apply(lambda x: count_country(['Germany' if item == 'Nazi Germany' else item for item in x], country = 'Germany'))
+
+    german_movies = europe.copy()
+    german_movies["count_us"] = german
+
+    nongerman_movies = german_movies.loc[german_movies["count_us"]==0]
+    german_movies = german_movies.loc[german_movies["count_us"]>0]
+
+
+    percentage_german = percentage_movies_genre(german_movies, europe,'Propaganda film', 1930, 1950,1940)
+    percentage_nongerman = percentage_movies_genre(nongerman_movies, europe,'Propaganda film', 1930, 1950,1940)
+
+    plt.plot(np.arange(1931,1950,1),percentage_german, label = 'German', color = 'b')
+    plt.plot(np.arange(1931,1950,1),percentage_nongerman, label = 'non German', color = 'green')
+    plt.xticks(np.arange(1931,1950,1), rotation = 'vertical')
+    plt.legend()
+    plt.grid()
+
+
+    
+    
+def process_data(data, genre, year_initial, year_end, focus_year):
+    
+    movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
+    movies_year.columns = ["year", "count"]
+    
+    yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
+    
+    percentage = movies_year.loc[(movies_year.year > year_initial) & (movies_year.year < year_end)]["count"] / yearly_movies[(yearly_movies.index > year_initial) & (yearly_movies.index < year_end)].values * 100
+    percentage_before = movies_year.loc[(movies_year.year > year_initial) & (movies_year.year <= focus_year)]["count"] / yearly_movies[(yearly_movies.index > year_initial) & (yearly_movies.index <= focus_year)].values * 100
+    percentage_after = movies_year.loc[(movies_year.year >= focus_year) & (movies_year.year < year_end)]["count"] / yearly_movies[(yearly_movies.index >= focus_year) & (yearly_movies.index < year_end)].values * 100
+    
     x_before = percentage_before.index.values.reshape(-1, 1) 
     y_before = percentage_before.values
-    reg = linear_model.LinearRegression()
-    reg.fit(x_before,y_before)
-    y_pred = reg.predict(x_before)
-
+    reg_before = linear_model.LinearRegression()
+    reg_before.fit(x_before, y_before)
+    y_pred_before = reg_before.predict(x_before)
+    
     x_after = percentage_after.index.values.reshape(-1, 1) 
     y_after = percentage_after.values
-    reg = linear_model.LinearRegression()
-    reg.fit(x_after,y_after)
-    y_pred_after = reg.predict(x_after)
-
-    plt.plot(movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year <= focus_year)]["year"], y_pred,linestyle='dashed',color = "blue", alpha = 0.7)
-    plt.plot(movies_year.loc[(movies_year.year >= focus_year  )&( movies_year.year < year_end)]["year"], y_pred_after,linestyle='dashed',color = "blue", alpha = 0.7)
-
-    plt.plot(movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year < year_end)]["year"], percentage, color ='b')
-    plt.plot([focus_year,focus_year],[percentage.min(), percentage.max()], color = 'r' )
-    plt.title(genre)
-    plt.tick_params(axis='both', which='major', labelsize=7)
-    plt.xticks(np.arange(year_initial, year_end + 1, 1), rotation=45) 
-    plt.grid()
+    reg_after = linear_model.LinearRegression()
+    reg_after.fit(x_after, y_after)
+    y_pred_after = reg_after.predict(x_after)
+    
+    return movies_year, percentage, percentage_before, percentage_after, y_pred_before, y_pred_after
+    
+    
+def linear_regression_plot(data1, data2, year_initial, year_end, focus_year, genre):
+    
+    movies_year1, percentage1, percentage_before1, percentage_after1, y_pred_before1, y_pred_after1 = process_data(data1, genre, year_initial, year_end, focus_year)
+    movies_year2, percentage2, percentage_before2, percentage_after2, y_pred_before2, y_pred_after2 = process_data(data2, genre, year_initial, year_end, focus_year)
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Plot the percentage of movies for US
+    ax.plot( movies_year1.loc[(movies_year1.year > year_initial) & (movies_year1.year < year_end)]["year"], 
+        percentage1,  marker='o', linestyle='-', color='blue', label='US')
+    
+    # Plot the percentage of movies for Non-US
+    ax.plot(movies_year2.loc[(movies_year2.year > year_initial) & (movies_year2.year < year_end)]["year"], 
+        percentage2, marker='o', linestyle='-', color='green', label='Non US')
+    
+    # Plot the trend before focus year for US
+    ax.plot(movies_year1.loc[(movies_year1.year > year_initial) & (movies_year1.year <= focus_year)]["year"], 
+        y_pred_before1, linestyle='--',  color='blue',  linewidth=2, alpha=0.7, label='Trend before - US')
+    
+    # Plot the trend before focus year for Non-US
+    ax.plot( movies_year2.loc[(movies_year2.year > year_initial) & (movies_year2.year <= focus_year)]["year"], 
+        y_pred_before2, linestyle='--', color='green', linewidth=2, alpha=0.7, label='Trend before - Non US')
+    
+    # Plot the trend after focus year for US
+    ax.plot(movies_year1.loc[(movies_year1.year >= focus_year) & (movies_year1.year < year_end)]["year"], 
+        y_pred_after1, linestyle='--', color='blue', linewidth=2, alpha=0.7, label='Trend after - US')
+    
+    # Plot the trend after focus year for Non-US
+    ax.plot(movies_year2.loc[(movies_year2.year >= focus_year) & (movies_year2.year < year_end)]["year"], 
+        y_pred_after2, linestyle='--', color='green', linewidth=2, alpha=0.7, label='Trend after - Non US')
+    
+    # Draw the vertical line at the focus year
+    ax.axvline(x=focus_year, color='red', linestyle='--', linewidth=2)
+    
+    # Add title and labels
+    ax.set_title(f'{genre}', fontsize=16)
+    ax.set_xlabel('Year', fontsize=14)
+    ax.set_ylabel('Percentage (%)', fontsize=14)
+    
+    # Customize ticks and grid
+    ax.set_xticks(np.arange(year_initial, year_end + 1, 1))
+    ax.tick_params(axis='x', rotation=45)
+    ax.grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
+    
+    # Add legend
+    ax.legend()
+    
+    # Show the plot
+    plt.tight_layout()
+    plt.show()

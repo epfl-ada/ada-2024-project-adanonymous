@@ -104,66 +104,7 @@ def plot_key_words_occ_zoomed(key_words_occ_df, key_words):
 
 
 
-def plotly_key_words_occ_zoomed(key_words_occ_df, key_words):
-    colors = [
-    '#1f77b4',  # muted blue
-    '#ff7f0e',  # safety orange
-    '#2ca02c',  # cooked asparagus green
-    '#d62728',  # brick red
-    '#9467bd',  # muted purple
-    '#8c564b',  # chestnut brown
-    '#e377c2',  # raspberry yogurt pink
-    '#7f7f7f',  # middle gray
-    '#bcbd22',  # curry yellow-green
-    '#17becf'   # blue-teal
-    ]
-      
-    df_key_words_occ_reset = key_words_occ_df.reset_index()
-    key_words_occ_df_zoomed = df_key_words_occ_reset[((1992 <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] <= 2013)) == 1]
-    key_words_occ_df_zoomed = key_words_occ_df_zoomed.set_index(keys='Movie_release_date')
 
-    col_name_of_key_words = ['Count_of_' + '_'.join(word.split(' ')) for word in key_words]
-    n_key_words = len(key_words)
-
-    # fig, ax = plt.subplots(math.ceil(n_key_words/2), 2, figsize= (math.ceil(n_key_words/2)*6, 8), sharey = True, sharex = True)
-    fig = go.Figure()
-    show = [False for i in range(n_key_words)]
-    buttons = []
-    show = [False for i in range(n_key_words)]
-    r = dict(label = "All", method = "update", args = [{"visible": [True for i in range(n_key_words)], "title": "All"}])
-    buttons.append(r)
-    for i in range(n_key_words):
-        #sbplt = ax[i%math.ceil(n_key_words/2), math.floor(i/math.ceil(n_key_words/2))]
-        col_name = col_name_of_key_words[i]
-        fig.add_trace(go.Scatter(x=key_words_occ_df_zoomed.index, y=key_words_occ_df_zoomed[col_name], name=key_words[i], showlegend=True,line=dict(color=colors[i])))
-        show_this_genre = show.copy()
-        show_this_genre[i] = True
-    
-        r = dict(label = key_words[i], method = "update", args = [{"visible": show_this_genre, "title": key_words[i]}])
-        buttons.append(r)
-
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                active=0,
-                buttons=list(buttons),
-                direction="down",
-                pad={"r": 10, "t": 10},
-                showactive=True,
-                y = 1.2,
-                x = 1,
-                xanchor="left",
-                yanchor="top",
-            ),
-        ]
-    )
-    fig.update_layout(title_text="Occurence of key words in plot summaries")
-    fig.update_xaxes(title_text="Year of release")
-    fig.update_yaxes(title_text="Number of occurences of the word")
-    fig.show()
-    fig.write_html("src/figures/9_11_key_words_occurence.html")
-
-    
 def percentage_key_words_before_after(key_words_occ_df):
     """
     Calculates the percentage of the key words occurence before 2002 (incl.) and after 2003 (incl.) separately.
