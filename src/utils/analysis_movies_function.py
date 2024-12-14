@@ -167,21 +167,79 @@ def ploltly_percentage_movies(data,data2, genres, year_initial, year_end, focus_
                 pad={"r": 10, "t": 10},
                 showactive=True,
                 y = 1.2,
-                x = 3,
+                x = 1,
                 xanchor="left",
                 yanchor="top",
             ),
         ]
     )
     fig.add_vline(x=focus_year, line_dash="dash", line_color="red", line_width=1)
-    fig.update_layout(height=800, width=800,
-                  title_text="Genre distribution before and after event")
+    fig.update_layout(title_text="Genre distribution")
     fig.update_xaxes(title_text="Year")
     fig.update_yaxes(title_text="Percentage of movies")
     fig.show()
     fig.write_html("src/figures/movie_genre_us.html")
 
+def ploltly_percentage_movies_ww2(data, genres, year_initial, year_end, focus_year,nrows,ncols):
+    colors = [
+    '#1f77b4',  # muted blue
+    '#ff7f0e',  # safety orange
+    '#2ca02c',  # cooked asparagus green
+    '#d62728',  # brick red
+    '#9467bd',  # muted purple
+    '#8c564b',  # chestnut brown
+    '#e377c2',  # raspberry yogurt pink
+    '#7f7f7f',  # middle gray
+    '#bcbd22',  # curry yellow-green
+    '#17becf'   # blue-teal
+]
+    fig = go.Figure()
+    show = [False for i in range(nrows*ncols)]
+    buttons = []
+    r = dict(label = "All", method = "update", args = [{"visible": [True for i in range(nrows*ncols)], "title": "All"}])
+    buttons.append(r)
+    for i in range(nrows):
+        for j in range(ncols):
+            genre = genres[i*ncols+j]
 
+            movies_year = data.groupby(data.Movie_release_date.dt.year).apply(lambda x: count_genre(x, genre)).reset_index()
+            movies_year.columns = ["year", "count"]
+            yearly_movies = data.groupby(data.Movie_release_date.dt.year)['nb_genre'].agg('sum')
+            x = movies_year.loc[(movies_year.year > year_initial  )&( movies_year.year < year_end)]["year"]
+            y = movies_year.loc[(movies_year.year>year_initial) & (movies_year.year<year_end)]["count"]/yearly_movies[(yearly_movies.index >year_initial) & (yearly_movies.index < year_end)].values*100
+            fig.add_trace(
+                go.Scatter(x = x, y = y, mode = 'lines', name = genre,legendgroup=genre,showlegend=True,line=dict(color=colors[i*ncols+j]))
+                )
+
+
+            show_this_genre = show.copy()
+            show_this_genre[(i*ncols+j)] = True
+            #show_this_genre[i*ncols+j+nrows*ncols] = True
+            print(show_this_genre)
+            r = dict(label = genre, method = "update", args = [{"visible": show_this_genre, "title": genre}])
+            buttons.append(r)
+    
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                active=0,
+                buttons=list(buttons),
+                direction="down",
+                pad={"r": 10, "t": 10},
+                showactive=True,
+                y = 1.2,
+                x = 1,
+                xanchor="left",
+                yanchor="top",
+            ),
+        ]
+    )
+    fig.add_vline(x=focus_year, line_dash="dash", line_color="red", line_width=1)
+    fig.update_layout(title_text="Genre distribution")
+    fig.update_xaxes(title_text="Year")
+    fig.update_yaxes(title_text="Percentage of movies")
+    fig.show()
+    fig.write_html("src/figures/movie_genre_us_ww2.html")
 
 
 
