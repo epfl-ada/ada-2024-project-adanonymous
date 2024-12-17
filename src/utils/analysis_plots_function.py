@@ -72,7 +72,7 @@ def ratios_before_after(dict_before, dict_after, min_expectation=1e-2):
 
 
 def plot_first_n(sorted_words, sorted_ratios, n):
-    fig = px.bar(x=sorted_words[:n], y=sorted_ratios[:n], labels={'x':'word', 'y':'ratio'}, title=f'Plot of the first {n} biggest difference ratios from before 9/11 to after')
+    fig = px.bar(x=sorted_words[:n], y=sorted_ratios[:n], labels={'x':'word', 'y':'ratio'}, title=f'Plot of the first {n} biggest ratios before to after')
     return fig
 
 
@@ -84,7 +84,7 @@ def get_model_parameters(figure):
 
 
 def plot_regression(dict_before, dict_after):
-    fig = px.scatter(x=dict_before.values(), y=dict_after.values(), labels={'x':'Expected number of word before 9/11', 'y':'Expected number of word after 9/11', 'hover_data_0':'word'}, hover_data=[dict_before.keys()], trendline='ols', trendline_color_override = 'red')
+    fig = px.scatter(x=dict_before.values(), y=dict_after.values(), labels={'x':'Expected number of word before event', 'y':'Expected number of word after event', 'hover_data_0':'word'}, hover_data=[dict_before.keys()], trendline='ols', trendline_color_override = 'red')
     model, m, b = get_model_parameters(fig)
     print(f'm = {m}, b = {b}')
     return fig, model
