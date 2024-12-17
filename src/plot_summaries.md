@@ -19,7 +19,7 @@ Okay, good. You try now to fit a scatter plot comparing the expected number of w
 
 (scatter plot with regression)
 
-The slope of the linear regression is ~1.37, suggesting that the expected number of a word tends to grow bigger with a factor of ~1.37. This naively suggests that plot summaries got longer with time and should be ~1.37 longer in expectation, which makes sense. We can however use this regression line to find interesting key words; you try to find the words that are the furthest from the regression line. This would allow for a more fair analysis for the biggest/smallest ratios, as it "normalizes" the fact that plot summaries got longer with time. You plot the ten furthest words :
+The slope of the linear regression is ~1.37, suggesting that the expected number of a word tends to grow. This naively suggests that plot summaries got longer with time and should be ~1.37 longer in expectation, which makes sense but does not help us really here. We can however use this regression line to find interesting key words; you try to find the words that are the furthest from the regression line. This would allow for a more fair analysis for the biggest/smallest ratios, as it "normalizes" the fact that plot summaries got longer with time. You plot the ten furthest words :
 
 (plot furthest words)
 
@@ -29,13 +29,15 @@ Instead of looking over statistics of all words, you try to focus on movies with
 
 (plot of number of movies per key word)
 
+(plot of number of movies per key word zoomed)
+
 It makes sense that the word nazi is used a lot between 1940-1950, but you notice that it then stays constant, oscillating between 3 and 10 movies per year after 1950. The key words "Hitler", "Axis" and "Allied" present the same pattern, altough smaller in magnitudes. The key word "Jew" is more interesting. We can see growth until the beginning of WW2, where it shrinks a bit and stays constant until 1960, where it grows again. We could understand that after the atrocities comitted towards the jewish people, the movie industry may have been more prudent.
 
 You find it interesting but it would make more sense to focus on time periods. You do that in two ways. First, you plot the years before and after the beginning of the war. Second, the years during the war, some years beforhand and some years afterwards. You remember the words "mission", "u.s.", "killing" and "kill" and you quickly add them in the key words. You plot the percentages of movies that contain the key words with respect to these time periods :
 
-(plot of percentage of movies 1)
+(plot of percentage of movies before after)
 
-(plot of percentage of movies 2)
+(plot of percentage of movies before during after)
 
 We see again that the word "Nazi" was very present during the war, surely in propaganda movies. The words "Hitler", "Axis" and "Allied" have the same pattern, as we have seen beforehand already. We see again that thw word "Jew" gets less frequent. You look at the newly added key words. The word "Mission" present the same pattern as we have discussed. The words "u.s." and "killing" just grow with time. "kill" is an interesting key word. It is a lot used during the war compared to beforehand and stays the same afterwards.
 
@@ -44,3 +46,40 @@ We have seen that the word "kill" comes back often in our analysis, telling us t
 # 9/11
 
 ## plot summaries
+
+You now look at the plot summaries of the movies. Surely after an event like this, plot summaries of movies have changed. But how ? You try then to compute interesting stuff.
+
+You first try to look at the expected number of words before and after 9/11.
+You filter out words that have an expected number of appearences less than 0.001, as they appear way too rarely. After some tedious computing, you obtain the first thirty biggest ratios :
+
+(first 30 plot)
+
+Mmmmh, we do not see any interesting words, except maybe "shrek"; it made you chuckle. You try then to to filter more aggressively and take out words that have an expected number of appearences less than 0.01. You obtain this now : 
+
+(second 30 plot)
+
+You obtain more general words, altough some are still too specific, as "kim" or "patrick". You see the words "video", "web" and "phone" which makes a lot of sense, as these got more popular after the 2000's. You notice the word "terrorist" with a ratio of ~2, which means it appears twice more often in plot summaries than before.
+
+Okay, that was not very concluant. You try now to fit a scatter plot comparing the expected number of words before and after 9/11 with a linear regression.
+
+(scatter plot with regression)
+
+The slope of the linear regression is ~1.14, suggesting that the expected number of a word tends to grow slighlty. This naively suggests that plot summaries got longer with time and should be ~1.14 longer in expectation, which makes sense but does not help us really here. We can however use this regression line to find interesting key words; you try to find the words that are the furthest from the regression line. This would allow for a more fair analysis for the biggest/smallest ratios, as it "normalizes" the fact that plot summaries got longer with time.
+
+(plot furthest words)
+
+You again find words that are not related to our case at hand, except for the word "war". 
+
+Instead of looking over statistics of all words, you try to focus on movies with certain key words. As key words, "plane", "tower", "terrorism", "hijack" and "islam" come first in your mind. You try to look at the number of movies that contain these key words. 
+
+(plot of number of movies per key word)
+
+(plot of number of movies per key word zoomed)
+
+We can see that the word "terrorist" and "tower" were more frequent after 2002 and grow, but drops in 2010. The word "terrorism" slightly grows after 2001 but then drops in 2008. There is a peak for the word "hijack" in 2006 and then drops a bit.
+
+Okay but it would make more sense to focus on time periods. You plot the years before and after 9/11. 
+
+(plot of percentage of movies before after)
+
+It is interesting to see that for the word "plane", it is less used after 9/11 than before, even though you would expect to have more.
