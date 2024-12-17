@@ -79,7 +79,7 @@ Rien de concluant
 
 <img src="assets/img/shrek.jpg" alt="drawing" width="200"/>
 ![image](assets/img/shrek.jpg){: style="float: left"}
-Fun fact : about shrek 
+Fun fact : aboutaaaaaaaaaaa shrek 
 zfgzifhziufhizuhfuzf zufygzuefg uzyfggzfgzfgizf
 
 
