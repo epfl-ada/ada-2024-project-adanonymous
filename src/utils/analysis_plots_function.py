@@ -224,9 +224,42 @@ def percentage_of_movies_with_key_words_before_after(df, mid_value, horizon_year
     return df_res
 
 
-def plot_percentage(df_percentage_before_after, mid_value, horizon_years=10):
+def plot_percentage_before_after(df, mid_value, horizon_years=10):
     before_horizon = mid_value - horizon_years
     after_horizon = mid_value + horizon_years
 
-    fig = px.bar(df_percentage_before_after,  x='Words', y=[f'{before_horizon}-{mid_value - 1}', f'{mid_value}-{after_horizon - 1}'], labels={'value':'Percentage of movies', 'Words':'Key word', 'variable':'Time period'}, barmode='group', title='Change of percentage of movies that contain certain key words')
+    fig = px.bar(df,  x='Words', y=[f'{before_horizon}-{mid_value - 1}', f'{mid_value}-{after_horizon - 1}'], labels={'value':'Percentage of movies', 'Words':'Key word', 'variable':'Time period'}, barmode='group', title='Change of percentage of movies that contain certain key words')
+    fig.show()
+
+
+def percentage_of_movies_with_key_words_before_during_after(df, first_year=1940, last_year=1946, horizon_years=10):
+    df_occ= df.reset_index()
+    before_horizon = first_year - horizon_years
+    after_horizon = last_year + horizon_years
+
+    df_occ_before = df_occ[(before_horizon <= df_occ['Movie_release_date']) * (df_occ['Movie_release_date'] < first_year) == 1]
+    df_occ_during = df_occ[(first_year <= df_occ['Movie_release_date']) * (df_occ['Movie_release_date'] <= last_year) == 1]
+    df_occ_after = df_occ[(last_year < df_occ['Movie_release_date'])  * (df_occ['Movie_release_date'] <= after_horizon) == 1]
+
+    df_res = pd.DataFrame(data={
+    f'{before_horizon}-{first_year - 1}': df_occ_before.sum() / df_occ_before['Movies'].sum(),
+    f'{first_year}-{last_year}': df_occ_during.sum() / df_occ_during['Movies'].sum(),
+    f'{last_year + 1}-{after_horizon}': df_occ_after.sum() / df_occ_after['Movies'].sum()
+    })
+
+    df_res = df_res.drop(['Movie_release_date', 'Movies']).map(lambda x: round(x*100, 2))
+
+    df_res.insert(0, 'Words', df_occ.columns[1:-1])
+
+    s = pd.Series(range(len(df_res)))
+    df_res.set_index(s, inplace=True)
+
+    return df_res
+
+
+def plot_percentage_before_during_after(df, first_year, last_year, horizon_years=10):
+    before_horizon = first_year - horizon_years
+    after_horizon = last_year + horizon_years
+
+    fig = px.bar(df,  x='Words', y=[f'{before_horizon}-{first_year - 1}', f'{first_year}-{last_year}', f'{last_year + 1}-{after_horizon}'], labels={'value':'Percentage of movies', 'Words':'Key word', 'variable':'Time period'}, barmode='group', title='Change of percentage of movies that contain certain key words')
     fig.show()
