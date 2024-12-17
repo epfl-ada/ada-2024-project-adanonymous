@@ -6,9 +6,9 @@ import plotly.express as px
 from collections import Counter
 from itertools import chain
 
-def expected_number_before_after(df_plots, split, without_n_most_common=None):
-    df_plots_after = df_plots[df_plots['Movie_release_date'].dt.year > split]
-    df_plots_before = df_plots[df_plots['Movie_release_date'].dt.year <= split]
+def expected_number_before_after(df_plots, mid_value, without_n_most_common=None):
+    df_plots_after = df_plots[df_plots['Movie_release_date'].dt.year > mid_value]
+    df_plots_before = df_plots[df_plots['Movie_release_date'].dt.year <= mid_value]
 
     plots_before = df_plots_before['Plot'].apply(lambda x: x.lower().strip("',.{[}]!?|").split()).to_list()
     plots_after = df_plots_after['Plot'].apply(lambda x: x.lower().strip("',.{[}]!?|").split()).to_list()
@@ -160,6 +160,47 @@ def plot_occ_by_year(df, key_words):
     fig.suptitle("Number of movie plots with a certain key word", fontsize=10)
 
 
+def plot_key_words_occ_zoomed(df, key_words, mid_value, horizon_years=10):
+    """
+    Plots the occurences of the key words by year of release of the movies from 1992 to 2013. Adds a grid for convenience
+
+    Args:
+        df (Dataframe): The dataframe of the key words occurences by year of release
+        key_words (List[str]): The list of key words
+    """
+    before_horizon = mid_value - horizon_years
+    after_horizon = mid_value + horizon_years
+
+    df_key_words_occ_reset = df.reset_index()
+    key_words_occ_df_zoomed = df_key_words_occ_reset[((before_horizon <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] < after_horizon)) == 1]
+    key_words_occ_df_zoomed = key_words_occ_df_zoomed.set_index(keys='Movie_release_date')
+
+    col_name_of_key_words = [word[0].upper() + word[1:] for word in key_words]
+    n_key_words = len(key_words)
+
+    fig, ax = plt.subplots(math.ceil(n_key_words/2), 2, figsize= (math.ceil(n_key_words/2)*6, 8), sharey = True, sharex = True)
+
+    for i in range(n_key_words):
+        sbplt = ax[i%math.ceil(n_key_words/2), math.floor(i/math.ceil(n_key_words/2))]
+        col_name = col_name_of_key_words[i]
+
+        sbplt.plot(key_words_occ_df_zoomed[col_name])
+        sbplt.set_title(f'{col_name_of_key_words[i]}')
+        sbplt.grid()
+
+        sbplt.tick_params(axis='both', which='major', labelsize=7)
+        sbplt.set_xticks([int(ind) for ind in key_words_occ_df_zoomed.index])
+        sbplt.set_xticklabels(sbplt.get_xticks(), rotation = 45)
+        
+    if (n_key_words % 2 != 0):
+        fig.delaxes(ax[math.floor(n_key_words/2), 1])
+
+    fig.tight_layout()
+
+    fig.text(0.48,0, "Year of release")
+    fig.text(0,0.38, "Number of movie plots", rotation = 90)
+
+
 def percentage_of_movies_with_key_words_before_after(df, mid_value, horizon_years=10):
     df_occ= df.reset_index()
     before_horizon = mid_value - horizon_years
@@ -181,45 +222,6 @@ def percentage_of_movies_with_key_words_before_after(df, mid_value, horizon_year
     df_res.set_index(s, inplace=True)
 
     return df_res
-
-    
-def plot_key_words_occ_zoomed(key_words_occ_df, key_words):
-    """
-    Plots the occurences of the key words by year of release of the movies from 1992 to 2013. Adds a grid for convenience
-
-    Args:
-        key_words_occ_df (Dataframe): The dataframe of the key words occurences by year of release
-        key_words (List[str]): The list of key words
-    """
-
-    df_key_words_occ_reset = key_words_occ_df.reset_index()
-    key_words_occ_df_zoomed = df_key_words_occ_reset[((1992 <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] <= 2013)) == 1]
-    key_words_occ_df_zoomed = key_words_occ_df_zoomed.set_index(keys='Movie_release_date')
-
-    col_name_of_key_words = ['Count_of_' + '_'.join(word.split(' ')) for word in key_words]
-    n_key_words = len(key_words)
-
-    fig, ax = plt.subplots(math.ceil(n_key_words/2), 2, figsize= (math.ceil(n_key_words/2)*6, 8), sharey = True, sharex = True)
-
-    for i in range(n_key_words):
-        sbplt = ax[i%math.ceil(n_key_words/2), math.floor(i/math.ceil(n_key_words/2))]
-        col_name = col_name_of_key_words[i]
-
-        sbplt.plot(key_words_occ_df_zoomed[col_name])
-        sbplt.set_title('Occurence of "' + key_words[i] + '" in plot summaries')
-        sbplt.grid()
-
-        sbplt.tick_params(axis='both', which='major', labelsize=7)
-        sbplt.set_xticks([int(ind) for ind in key_words_occ_df_zoomed.index])
-        sbplt.set_xticklabels(sbplt.get_xticks(), rotation = 45)
-        
-    if (n_key_words % 2 != 0):
-        fig.delaxes(ax[math.floor(n_key_words/2), 1])
-
-    fig.tight_layout()
-
-    fig.text(0.48,0, "Year of release")
-    fig.text(0,0.38, "Number of occurences of the word", rotation = 90)
 
 
 def plot_percentage(df_percentage_before_after, mid_value, horizon_years=10):
