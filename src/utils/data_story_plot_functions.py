@@ -19,7 +19,7 @@ def plotly_key_words_occ_zoomed(key_words_occ_df, key_words):
     ]
       
     df_key_words_occ_reset = key_words_occ_df.reset_index()
-    key_words_occ_df_zoomed = df_key_words_occ_reset[((1992 <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] <= 2013)) == 1]
+    key_words_occ_df_zoomed = df_key_words_occ_reset[((1930 <= df_key_words_occ_reset['Movie_release_date']) * (df_key_words_occ_reset['Movie_release_date'] <= 1950)) == 1]
     key_words_occ_df_zoomed = key_words_occ_df_zoomed.set_index(keys='Movie_release_date')
 
     col_name_of_key_words = ['Count_of_' + '_'.join(word.split(' ')) for word in key_words]
@@ -32,9 +32,13 @@ def plotly_key_words_occ_zoomed(key_words_occ_df, key_words):
     show = [False for i in range(n_key_words)]
     r = dict(label = "All", method = "update", args = [{"visible": [True for i in range(n_key_words)], "title": "All"}])
     buttons.append(r)
+    #print(key_words_occ_df_zoomed.head())
+    #print(col_name_of_key_words)
     for i in range(n_key_words):
         #sbplt = ax[i%math.ceil(n_key_words/2), math.floor(i/math.ceil(n_key_words/2))]
         col_name = col_name_of_key_words[i]
+        col_name = key_words[i].capitalize()
+        #print(col_name)
         fig.add_trace(go.Scatter(x=key_words_occ_df_zoomed.index, y=key_words_occ_df_zoomed[col_name], name=key_words[i], showlegend=True,line=dict(color=colors[i])))
         show_this_genre = show.copy()
         show_this_genre[i] = True
@@ -61,7 +65,7 @@ def plotly_key_words_occ_zoomed(key_words_occ_df, key_words):
     fig.update_xaxes(title_text="Year of release")
     fig.update_yaxes(title_text="Number of occurences of the word")
     fig.show()
-    fig.write_html("src/figures/9_11_key_words_occurence.html")
+    fig.write_html("src/figures/WW2_key_words_occurence.html")
 
 
 def ploltly_percentage_movies(data,data2, genres, year_initial, year_end, focus_year,nrows,ncols):

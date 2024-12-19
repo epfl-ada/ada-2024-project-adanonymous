@@ -87,6 +87,8 @@ def plot_regression(dict_before, dict_after):
     fig = px.scatter(x=dict_before.values(), y=dict_after.values(), labels={'x':'Expected number of word before event', 'y':'Expected number of word after event', 'hover_data_0':'word'}, hover_data=[dict_before.keys()], trendline='ols', trendline_color_override = 'red')
     model, m, b = get_model_parameters(fig)
     print(f'm = {m}, b = {b}')
+    fig.update_layout(title='Regression plot of expected number of words before and after 9/11')
+
     return fig, model
 
 
@@ -229,7 +231,7 @@ def plot_percentage_before_after(df, mid_value, horizon_years=10):
     after_horizon = mid_value + horizon_years
 
     fig = px.bar(df,  x='Words', y=[f'{before_horizon}-{mid_value - 1}', f'{mid_value}-{after_horizon - 1}'], labels={'value':'Percentage of movies', 'Words':'Key word', 'variable':'Time period'}, barmode='group', title='Change of percentage of movies that contain certain key words')
-    fig.show()
+    return fig
 
 
 def percentage_of_movies_with_key_words_before_during_after(df, first_year=1940, last_year=1946, horizon_years=10):
@@ -262,4 +264,4 @@ def plot_percentage_before_during_after(df, first_year, last_year, horizon_years
     after_horizon = last_year + horizon_years
 
     fig = px.bar(df,  x='Words', y=[f'{before_horizon}-{first_year - 1}', f'{first_year}-{last_year}', f'{last_year + 1}-{after_horizon}'], labels={'value':'Percentage of movies', 'Words':'Key word', 'variable':'Time period'}, barmode='group', title='Change of percentage of movies that contain certain key words')
-    fig.show()
+    return fig
