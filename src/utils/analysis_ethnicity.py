@@ -2,12 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+
+
 def map_continent(movie_country, continent_data_frame):
     label = continent_data_frame[continent_data_frame['Entity'] == movie_country]['World regions according to OWID']
     if len(label) > 0:
         return label.values[0]
     else:
         return None
+    
+
 def map_dataset(character):
     character.reset_index(drop=True, inplace=True)
     #Association for each character to two continent corresponding to First and Second country name (isolated during preprocessing)
@@ -17,6 +21,8 @@ def map_dataset(character):
         character.at[i, 'Continent'] = labels
         character.at[i,'Second_Continent'] = labels2
     return character
+
+
 def plot_all_eth(regions):
     plt.figure(figsize=(15, 10))
 
@@ -30,6 +36,8 @@ def plot_all_eth(regions):
 
     plt.subplots_adjust(wspace=0.5, hspace=1.5)
     plt.show()
+
+
 def extract_top_10(df):
 
     list_ethnicities = list(set(character['Ethnicity_Label']))
@@ -50,11 +58,15 @@ def extract_top_10(df):
     ethnicity_top10 = sorted_df['Ethnicity'].head(10)
 
     return ethnicities_distribution, ethnicity_top10
+
+
 def eth_per_year(data,year):
     data_new = data.loc[data['Movie_Release_Year'] == year]
     distribution, top_10 = extract_top_10(data_new)
 
     return distribution, top_10
+
+
 def plot_10_ethnicties(counts,year):
     """
     Plots the top 10 ethnicities for a given year based on occurrence counts.
@@ -74,6 +86,8 @@ def plot_10_ethnicties(counts,year):
     plt.xlabel('Ethnicity')
     plt.tight_layout()
     plt.show()
+
+
 def ethnicity_count(regions):
     '''
     Analyzes ethnicity distribution for movie data across specified time periods and regions.
@@ -127,6 +141,8 @@ def ethnicity_count(regions):
         ethnicity_counts_1937_1941[region_name] = counts_1937_1941
         ethnicity_counts_1942_1948[region_name] = counts_1942_1948
     return ethnicity_counts_1937_1941,ethnicity_counts_1942_1948,data_1937_1948,distribution_1937_1941,distribution_1942_1948
+
+
 def form_df(ethnicity_counts_1937_1941,ethnicity_counts_1942_1948):
     """
     Converts ethnicity counts for different regions into DataFrames for easier plotting and analysis.
@@ -167,6 +183,7 @@ def form_df(ethnicity_counts_1937_1941,ethnicity_counts_1942_1948):
     regions = {'North Americas':df_NA,'South America': df_SA,'Asia': df_AS,'Africa': df_AF,'Europe': df_EU}
     return regions
 
+
 def display_length_eth(regions):
     """
     Displays the total number of entries for the '1937-1941' and '1942-1948' columns for each region.
@@ -181,6 +198,8 @@ def display_length_eth(regions):
     """
     for region_name,region_df in regions.items():
         print(f"Region: {region_name} has {region_df['1937-1941'].sum()} entries in '1937-1941' and {region_df['1942-1948'].sum()} '1942-1948'.")
+
+
 def plot_eth(regions,titles):
     '''
     Plots ethnicity distribution for each region across two time periods (1937–1941 and 1942–1948).
@@ -210,6 +229,8 @@ def plot_eth(regions,titles):
         axes[i].set_xticklabels(df['Ethnicity'], rotation=45, ha="right")
     plt.tight_layout()
     plt.show()
+
+
 def percentage_df(ethnicity_counts_1937_1941,ethnicity_counts_1942_1948):
     """
     Converts ethnicity counts for North America (NA) and Europe (EU) into percentage form
@@ -242,6 +263,8 @@ def percentage_df(ethnicity_counts_1937_1941,ethnicity_counts_1942_1948):
     })
     df_percentage = [df_NA_percentage,df_EU_percentage]
     return df_percentage
+
+
 def ratio(df_regions):
     """
     Computes the ratio of change between two time periods (1937-1941 and 1942-1948)
@@ -266,6 +289,8 @@ def ratio(df_regions):
 
     print("North America: 5 Largest Ratios: \n \n", largest_ratios_NA)
     print("\n \n Europe: 5 Largest Ratios:\n \n", largest_ratios_EU)
+
+
 def plot_trend(eu_german_trend,na_german_trend,title1, title2,title3):
     '''
     Plots the trend of German characters in movies for Europe and North America over time,
@@ -291,6 +316,8 @@ def plot_trend(eu_german_trend,na_german_trend,title1, title2,title3):
     plt.legend()
     plt.grid(True)
     plt.show()
+
+
 def plot_absolute_trend_character(character_EU, character_NA):
     """
     This function plots the trends of German and Jewish characters' absolute character number in movies 
@@ -326,6 +353,7 @@ def plot_absolute_trend_character(character_EU, character_NA):
     plot_trend(eu_jewish_trend,na_jewish_trend,'EU Jewish Characters','NA Jewish Characters','Trends of Jewish Characters (Before and After WWII)')
     plt.tight_layout()
     plt.show()
+
 
 def plot_proportion_trend(character_EU,character_NA):
     """
