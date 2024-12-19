@@ -42,47 +42,41 @@ Plot jews german evolution before / après
 
 ## Plot analysis 
 
-You wish to look at the plot summaries of movies. You think to yourself : "Surely having a world war has changed not only the types of movies produced but the content of the movies itself too..." You then try to compute some statistics over the plot summaries. 
+You now want to look at the plot summaries of movies. You think to yourself, "Surely the impact of a world war must have influenced not only the types of movies produced but also their content..." So, you decide to compute some statistics based on the plot summaries.
 
-You first try to look at the expected number of words before and after the second world war.
-You filter out words that have an expected number of appearences less than 0.001, as they appear way too rarely. After some tedious computing, you obtain the first thirty biggest ratios :
+First, you look at the expected number of words before and after World War II. To ensure the analysis is meaningful, you filter out words that appear too infrequently, removing those with an expected frequency of less than 0.001. After some calculations, you obtain the top thirty words with the largest ratio of occurrences.
 
-(first 30 plot)
+(First 30 plot)
 
-What does that mean ? We see that the word "tank" appeared ~11 times more afterwards, "japanese" ~10 times more and "terrorist" ~8 times more. You are a bit confused by some words that are too specific, such as "alex" or "sandy". You decide to filter more aggressively and take out words that have an expected number of appearences less than 0.01 now. Again you do some computing and you obtain this :
+What does that tell us ? You observe that certain words have become significantly more frequent after the war. For example, "tank" appears roughly 11 times more often, "japanese" about 10 times more, and "terrorist" roughly 8 times more. Some words, such as "alex" or "sandy," are too specific and we would want more general words. So, you decide to filter more aggressively, removing words with an expected frequency lower than 0.01. 
 
-(second 30 plot)
+(Second 30 plot)
 
-You are happy to find more general words. You see that the words "phone" appears ~4 times more and camera appears ~3 times more. You approve these results as technology is more obviously more present after the begginning of WW2 than before. You notice that among the plot with more general words, the words "mission", "u.s.", and "killing" appear ~3 times more.  You can not say that WW2 is the cause of the more frequent usage of these words but we keep them in mind for later, when we will analyse the plot summaries in a more specific time period.
+Now, you are pleased to see more general terms. For instance, "phone" appears approximately 4 times more frequently, and "camera" about 3 times more often. These results seem reasonable, as technology is used a lot more after WWII. Among the more general terms, you also find words like "mission," "u.s.," and "killing" appearing about 3 times more often. While you cannot definitively attribute these shifts to WWII, you keep these findings in mind for future analysis when you focus on specific time periods.
 
-Okay, good. You try now to fit a scatter plot comparing the expected number of words before and after WW2 with a linear regression. It looks like this :
+Okay, good. Now, you decide to fit a scatter plot comparing the expected number of words before and after WWII with a linear regression.
 
-(scatter plot with regression)
+(Scatter plot with regression)
 
-The slope of the linear regression is ~1.37, suggesting that the expected number of a word tends to grow. This naively suggests that plot summaries got longer with time and should be ~1.37 longer in expectation, which makes sense but does not help us really here. We can however use this regression line to find interesting key words; you try to find the words that are the furthest from the regression line. This would allow for a more fair analysis for the biggest/smallest ratios, as it "normalizes" the fact that plot summaries got longer with time. You plot the ten furthest words :
+The slope of the linear regression is approximately 1.37, suggesting that the expected frequency of a word tends to increase over time. This is simply because that plot summaries have gotten longer, with an average increase of about 1.37 times, which makes sense but doesn't provide much insight for our current analysis. However, we can use this regression line to identify interesting keywords by focusing on those that deviate the most from the line. This approach helps "normalize" the analysis by accounting for the general trend of longer plot summaries over time. You plot the ten words that deviate most from the regression line.
 
-(plot furthest words)
+(Plot of furthest words)
 
- You then think that the theme of killing got more popular after WW2 as you see the word "kill" is present again.
+From this, you observe that the theme of "killing" seems to have gained more prominence after WWII, as the word "kill" appears more frequently.
 
-Instead of looking over statistics of all words, you try to focus on movies with certain key words. As key words, "Nazi", "Hitler", "Axis", "Allied" and "Jew" come first in your mind. You try to look at the number of movies that contain these key words. 
+Next, you shift your focus to movies containing specific keywords. You first think of terms like "Nazi," "Hitler," "Axis," "Allied," and "Jew." You examine the number of movies featuring these keywords over time.
 
-(plot of number of movies per key word)
+(Plot of number of movies per keyword zoomed)
 
-(plot of number of movies per key word zoomed)
+It’s not surprising that the word "Nazi" peaks in the middle of WWII, but you notice that its frequency goes down already in 1944. We can not see it in the plot but you find that after 1950, between 3 and 10 movies per year contain the key word "Nazi", making it a theme. Similarly, the keywords "Hitler," "Axis," and "Allied" show a similar pattern, although with smaller magnitudes. The keyword "Jew" is more intriguing. We see growth leading up to WWII, then a slight decline during the war. You look at the time afterwards and you see a resurgence after 1960. This suggests that, in response to the atrocities committed against Jewish people, the film industry may have initially been cautious but gradually returned to addressing the topic in the post-war years.
 
-It makes sense that the word nazi is used a lot between 1940-1950, but you notice that it then stays constant, oscillating between 3 and 10 movies per year after 1950. The key words "Hitler", "Axis" and "Allied" present the same pattern, altough smaller in magnitudes. The key word "Jew" is more interesting. We can see growth until the beginning of WW2, where it shrinks a bit and stays constant until 1960, where it grows again. We could understand that after the atrocities comitted towards the jewish people, the movie industry may have been more prudent.
+You find this pattern interesting but decide it would be more insightful to focus on specific time periods. You examine the years during the war along with the years just before and after. You recall the words "mission," "u.s.," "killing," and "kill" and add them to your keyword list. You then plot the percentages of movies containing these keywords within the defined time periods.
 
-You find it interesting but it would make more sense to focus on time periods. You do that in two ways. First, you plot the years before and after the beginning of the war. Second, the years during the war, some years beforhand and some years afterwards. You remember the words "mission", "u.s.", "killing" and "kill" and you quickly add them in the key words. You plot the percentages of movies that contain the key words with respect to these time periods :
+(Plot of percentage of movies before, during, and after)
 
-(plot of percentage of movies before after)
+Once again, we see that the word "Nazi" was heavily used during the war, likely in propaganda films. The terms "Hitler," "Axis," and "Allied" follow the same pattern as before. The word "Jew" shows a noticeable decline during the war. Turning to the newly added keywords, "Mission" follows the same pattern as previously observed, while "U.S." and "Killing" steadily increase over time. "Kill" is particularly interesting: it appears significantly more during the war compared to before and remains steady afterward.
 
-(plot of percentage of movies before during after)
-
-We see again that the word "Nazi" was very present during the war, surely in propaganda movies. The words "Hitler", "Axis" and "Allied" have the same pattern, as we have seen beforehand already. We see again that thw word "Jew" gets less frequent. You look at the newly added key words. The word "Mission" present the same pattern as we have discussed. The words "u.s." and "killing" just grow with time. "kill" is an interesting key word. It is a lot used during the war compared to beforehand and stays the same afterwards.
-
-We have seen that the word "kill" comes back often in our analysis, telling us that the violence of the war and death surely changed/shocked all human beings and that it reflects in the movie industry. 
-
+You think to yourself that WWII darkly influenced the content of movie plot summaries. It becomes clear that certain terms, such as "tank," "japanese," or "terrorist," became much more common post-WWII, reflecting the impact of the war on film themes. Additionally, terms related to violence, such as "killing" and "kill," grew in prominence during and after the war, suggesting a shift in the narrative focus of films. These results provide insights into how WWII shaped cinematic storytelling, with evolving themes related to technology, violence, and historical reflection.
 
 # 9/11
 
@@ -116,42 +110,43 @@ Rien de concluant
 
 ## Plot analysis 
 
-You now look at the plot summaries of the movies. Surely after an event like this, plot summaries of movies have changed. But how ? You try then to compute interesting stuff.
+You decide to examine the plot summaries of movies, thinking that an event as significant as 9/11 must have influenced their content. But how exactly did it impact the plots ? You set out to compute some interesting statistics to explore this.
 
-You first try to look at the expected number of words before and after 9/11.
-You filter out words that have an expected number of appearences less than 0.001, as they appear way too rarely. After some tedious computing, you obtain the first thirty biggest ratios :
+First, you analyze the expected number of words before and after 9/11. To ensure meaningful results, you filter out words that appear too infrequently — those with an expected frequency of less than 0.001. After some extensive calculations, you identify the top thirty words with the largest ratios of occurrence:
 
-(first 30 plot)
+(First 30 plot)
 
-Mmmmh, we do not see any interesting words, except maybe "shrek"; it made you chuckle. You try then to to filter more aggressively and take out words that have an expected number of appearences less than 0.01. You obtain this now : 
+Mmmmh, these results don’t reveal much. You notice the word "shrek", which makes you chuckle.
 
-(second 30 plot)
+You decide to refine your analysis further by filtering out words with an expected frequency lower than 0.01. The new results look like this:
 
-You obtain more general words, altough some are still too specific, as "kim" or "patrick". You see the words "video", "web" and "phone" which makes a lot of sense, as these got more popular after the 2000's. You notice the word "terrorist" with a ratio of ~2, which means it appears twice more often in plot summaries than before.
+(Second 30 plot)
 
-Okay, that was not very concluant. You try now to fit a scatter plot comparing the expected number of words before and after 9/11 with a linear regression.
+This time, you notice more general words, though some — like "Kim" or "Patrick" — remain too still too specific. More relevant terms like "video," "web," and "phone" stand out, reflecting their rise in popularity after the 2000s. Additionally, the word "terrorist" appears with a ratio of about 2, meaning it appears twice as often in plot summaries after 9/11.
 
-(scatter plot with regression)
+Although this provides some interesting insights, the findings are not particularly conclusive. You then decide to plot a scatter graph comparing the expected number of words before and after 9/11, along with a linear regression line.
 
-The slope of the linear regression is ~1.14, suggesting that the expected number of a word tends to grow slighlty. This naively suggests that plot summaries got longer with time and should be ~1.14 longer in expectation, which makes sense but does not help us really here. We can however use this regression line to find interesting key words; you try to find the words that are the furthest from the regression line. This would allow for a more fair analysis for the biggest/smallest ratios, as it "normalizes" the fact that plot summaries got longer with time.
+(Scatter plot with regression)
+
+The regression slope is approximately 1.14, suggesting that the expected frequency of words tends to increase slightly over time. This indicates that plot summaries have generally gotten longer, which makes sense but doesn’t provide much additional insight for this analysis. However, you can use this regression line to identify keywords that are furthest from it. This provides a more accurate comparison of the ratios, accounting for the general trend of increasing plot summary length over time.
 
 (plot furthest words)
 
-You again find words that are not related to our case at hand, except for the word "war". 
+You find several words that are not directly related to the topic at hand, except for "war."
 
-Instead of looking over statistics of all words, you try to focus on movies with certain key words. As key words, "plane", "tower", "terrorism", "hijack" and "islam" come first in your mind. You try to look at the number of movies that contain these key words. 
+Rather than analyzing all words, you decide to focus on movies featuring specific keywords. The terms "plane," "tower," "terrorism," "hijack," and "islam" comes first to mind. You then examine the number of movies containing these keywords.
 
-(plot of number of movies per key word)
+(Plot of number of movies per keyword zoomed)
 
-(plot of number of movies per key word zoomed)
+Strangely, the word "plane" drops in 2008. The data reveals that the words "terrorist" and "tower" became more frequent after 2002, showing an increase, though they drop in 2010. The term "terrorism" experiences a slight rise after 2001, followed by a decline in 2008. There’s also a peak in 2006 for "hijack," after which its frequency decreases.
 
-We can see that the word "terrorist" and "tower" were more frequent after 2002 and grow, but drops in 2010. The word "terrorism" slightly grows after 2001 but then drops in 2008. There is a peak for the word "hijack" in 2006 and then drops a bit.
+However, it seems more insightful to focus on specific time periods. You plot the number of movies before and after 9/11.
 
-Okay but it would make more sense to focus on time periods. You plot the years before and after 9/11. 
+(Plot of percentage of movies before and after)
 
-(plot of percentage of movies before after)
+Interestingly, the term "plane" is used less frequently after 9/11 than before, despite the expectation that it would appear more often. It is surely not linked to 9/11 as we saw in the previous plot that it begins to drop in 2008. We see a slight drop for all key words except for "terrorism" and "islam". This plot being heavily influenced from the time after 2008, it may have been more insightful to have smaller time periods before and after 9/11. 
 
-It is interesting to see that for the word "plane", it is less used after 9/11 than before, even though you would expect to have more.
+In conclusion, analyzing the plot summaries of movies before and after 9/11 reveals some notable shifts in terminology, but the results are not entirely conclusive. While the analysis provides some useful trends, a more refined approach with smaller time periods before and after 9/11 could yield deeper insights.
 
 {% include_relative assets/figures/9_11_key_words_occurence_14_18_24.html %} 
 
